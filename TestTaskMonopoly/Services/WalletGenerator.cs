@@ -4,11 +4,13 @@ namespace TestTaskMonopoly.Services;
 
 public class WalletGenerator : IWalletGenerator
 {
+    // Массив с именами для генерации
     private readonly static string[] Names =
     {
         "Дебетовый", "Кредитка", "Сбережения", "Ипотека", "Инвестиции"
     };
 
+    // Массив с валютами
     private readonly static string[] Currencies =
     {
         "RUB", "USD", "EUR"
@@ -16,6 +18,12 @@ public class WalletGenerator : IWalletGenerator
 
     private readonly Random _rnd = new();
 
+    /// <summary>
+    /// Генерация кошелька со случайными транзакциями и параметрами
+    /// </summary>
+    /// <param name="transactionsCount"></param>
+    /// <returns>Кошелек со случайными параметрами</returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public Wallet GenerateWallet(int transactionsCount)
     {
         if (transactionsCount < 0)

@@ -41,7 +41,7 @@ public class WalletGeneratorTests
 
         Assert.NotEqual(wallet1.Id, wallet2.Id);
     }
-    
+
     [Theory]
     [InlineData(-1)]
     [InlineData(-10)]
@@ -49,5 +49,4 @@ public class WalletGeneratorTests
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => _walletGenerator.GenerateWallet(transactionCount));
     }
-
 }

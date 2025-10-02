@@ -31,11 +31,16 @@ public class Wallet
     {
         if (initialBalance < 0)
             throw new ArgumentOutOfRangeException(nameof(initialBalance), initialBalance,
-                "Начальный баланс должен быть положительным.");
+                "Начальный баланс должен быть не отрицательным.");
 
         return new Wallet(Guid.NewGuid(), name, currency, initialBalance);
     }
 
+    /// <summary>
+    /// Добавление транзакции в кошелек
+    /// </summary>
+    /// <param name="transaction"></param>
+    /// <exception cref="InvalidOperationException"></exception>
     public void AddTransaction(Transaction transaction)
     {
         if (transaction.TransactionType == TransactionType.Expense && transaction.Amount > CurrentBalance)
@@ -43,5 +48,4 @@ public class Wallet
 
         _transactions.Add(transaction);
     }
-    
 }
