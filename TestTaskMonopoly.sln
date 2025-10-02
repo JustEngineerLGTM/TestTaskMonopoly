@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTaskMonopoly", "TestTaskMonopoly\TestTaskMonopoly.csproj", "{A5361038-03C0-4FAC-B05A-FCCDFC5BC5E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{1176DD0B-3EF5-4F11-A9C9-DF3BAEAF2C56}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A5361038-03C0-4FAC-B05A-FCCDFC5BC5E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5361038-03C0-4FAC-B05A-FCCDFC5BC5E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5361038-03C0-4FAC-B05A-FCCDFC5BC5E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5361038-03C0-4FAC-B05A-FCCDFC5BC5E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1176DD0B-3EF5-4F11-A9C9-DF3BAEAF2C56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1176DD0B-3EF5-4F11-A9C9-DF3BAEAF2C56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1176DD0B-3EF5-4F11-A9C9-DF3BAEAF2C56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1176DD0B-3EF5-4F11-A9C9-DF3BAEAF2C56}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
