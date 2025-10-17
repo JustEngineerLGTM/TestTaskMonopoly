@@ -1,8 +1,7 @@
 ﻿using TestTaskMonopoly.Models;
-
 namespace TestTaskMonopoly.Domain;
 
-public class Wallet
+public class Wallet : IEntity
 {
     private readonly List<Transaction> _transactions = [];
 
@@ -14,7 +13,6 @@ public class Wallet
         InitialBalance = initialBalance;
     }
 
-    public Guid Id { get; }
     public string Name { get; private set; }
     public string Currency { get; }
     private decimal InitialBalance { get; }
@@ -27,6 +25,8 @@ public class Wallet
         Transactions.Where(t => t.TransactionType == TransactionType.Income).Sum(t => t.Amount) -
         Transactions.Where(t => t.TransactionType == TransactionType.Expense).Sum(t => t.Amount);
 
+    public Guid Id { get; }
+
     public static Wallet Create(string name, string currency, decimal initialBalance)
     {
         if (initialBalance < 0)
@@ -37,7 +37,7 @@ public class Wallet
     }
 
     /// <summary>
-    /// Добавление транзакции в кошелек
+    ///     Добавление транзакции в кошелек
     /// </summary>
     /// <param name="transaction"></param>
     /// <exception cref="InvalidOperationException"></exception>

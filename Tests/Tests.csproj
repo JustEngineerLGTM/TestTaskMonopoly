@@ -19,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TestTaskMonopoly\TestTaskMonopoly.csproj" />
+        <ProjectReference Include="..\TestTaskMonopoly\TestTaskMonopoly.csproj"/>
     </ItemGroup>
 
 </Project>

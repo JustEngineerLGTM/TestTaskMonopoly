@@ -1,9 +1,8 @@
 ﻿using TestTaskMonopoly.Models;
 namespace TestTaskMonopoly.Domain;
 
-public class Transaction
+public class Transaction : IEntity
 {
-
     private Transaction(DateTime date, decimal amount, TransactionType type, string? description, Guid id)
     {
         Date = date;
@@ -13,13 +12,12 @@ public class Transaction
         Id = id;
     }
 
-    public Guid Id { get; }
     public DateTime Date { get; private set; }
-
     public decimal Amount { get; private set; }
-
     public TransactionType TransactionType { get; private set; }
     public string? Description { get; private set; }
+
+    public Guid Id { get; }
 
     public static Transaction Create(DateTime date, decimal amount, TransactionType type, string? description)
     {

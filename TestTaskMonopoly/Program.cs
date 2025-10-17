@@ -5,7 +5,7 @@ using TestTaskMonopoly.Models;
 using TestTaskMonopoly.Services;
 
 // Переменные для настройки генератора
-const int walletsCount = 10;
+const int walletsCount = 100;
 const int transactionsCount = 50;
 
 var builder = Host.CreateDefaultBuilder(args)
@@ -32,7 +32,7 @@ while (true)
     Console.WriteLine("0 - Выход");
     Console.Write("Ваш выбор: ");
     var choice = Console.ReadLine();
-    int month;
+
 
     switch (choice)
     {
@@ -40,25 +40,27 @@ while (true)
             Environment.Exit(0);
             break;
         case "1":
-            month = ReadMonth();
+            var month = ReadMonth();
+            var year = ReadYear();
 
             foreach (var wallet in wallets)
             {
                 Console.WriteLine("Транзакции сгруппированные по тимам:");
-                PrintTransactionsByType(wallet, month);
+                PrintTransactionsByType(wallet, month, year);
                 Console.WriteLine("Транзакции сгруппированные по тимам и сумме:");
-                PrintByTotalAmount(wallet, month);
+                PrintByTotalAmount(wallet, month, year);
                 Console.WriteLine("Транзакции сгруппированные и отсортированные по датам :");
-                PrintTransactionsByDate(wallet, month);
+                PrintTransactionsByDate(wallet, month, year);
             }
 
             break;
         case "2":
             month = ReadMonth();
+            year = ReadYear();
 
             foreach (var wallet in wallets)
             {
-                PrintTopExpenses(wallet, month);
+                PrintTopExpenses(wallet, month, year);
             }
 
             break;
@@ -74,6 +76,7 @@ while (true)
             break;
     }
 }
+
 // Проверка ввода месяца пользователем
 int ReadMonth()
 {
@@ -88,6 +91,19 @@ int ReadMonth()
     }
 }
 
+int ReadYear()
+{
+    while (true)
+    {
+        Console.Write("Введите год: ");
+
+        if (int.TryParse(Console.ReadLine(), out var year) && year >= 0)
+            return year;
+
+        Console.WriteLine("Неверный год");
+    }
+}
+
 // Вывод в консоль всех транзакций
 void PrintAllTransactions(Wallet wallet)
 {
@@ -97,14 +113,15 @@ void PrintAllTransactions(Wallet wallet)
     {
         Console.WriteLine($"    {t.Date:yyyy-MM-dd} | {t.TransactionType} | {t.Amount} | {t.Description}");
     }
+
     Console.WriteLine();
 }
 
 // Вывод в консоль транзакций сгруппированные по типу
-void PrintTransactionsByType(Wallet wallet, int month)
+void PrintTransactionsByType(Wallet wallet, int month, int year)
 {
     var transactionsByMonth = wallet.Transactions
-        .Where(t => t.Date.Month == month)
+        .Where(t => t.Date.Month == month && t.Date.Year == year)
         .GroupBy(t => t.TransactionType);
 
     Console.WriteLine($"Кошелек: {wallet.Name}::{wallet.Id.ToString()[..4]} ({wallet.Currency})");
@@ -118,14 +135,15 @@ void PrintTransactionsByType(Wallet wallet, int month)
             Console.WriteLine($"    {t.Date:yyyy-MM-dd} | {t.Amount} | {t.Description}");
         }
     }
+
     Console.WriteLine();
 }
 
 // Вывод в консоль транзакций сгруппированные по типу и отсортированные по общей сумме
-void PrintByTotalAmount(Wallet wallet, int month)
+void PrintByTotalAmount(Wallet wallet, int month, int year)
 {
     var grouped = wallet.Transactions
-        .Where(t => t.Date.Month == month)
+        .Where(t => t.Date.Month == month && t.Date.Year == year)
         .GroupBy(t => t.TransactionType)
         .OrderByDescending(g => g.Sum(t => t.Amount));
 
@@ -133,17 +151,18 @@ void PrintByTotalAmount(Wallet wallet, int month)
 
     foreach (var group in grouped)
     {
-        decimal total = group.Sum(t => t.Amount);
+        var total = group.Sum(t => t.Amount);
         Console.WriteLine($"    {group.Key} — общая сумма: {total}");
     }
+
     Console.WriteLine();
 }
 
 // Вывод в консоль транзакций сгруппированные по типу и отсортированные по дате от старых до новых
-void PrintTransactionsByDate(Wallet wallet, int month)
+void PrintTransactionsByDate(Wallet wallet, int month, int year)
 {
     var grouped = wallet.Transactions
-        .Where(t => t.Date.Month == month)
+        .Where(t => t.Date.Month == month && t.Date.Year == year)
         .GroupBy(t => t.TransactionType)
         .OrderByDescending(g => g.Sum(t => t.Amount));
 
@@ -158,16 +177,17 @@ void PrintTransactionsByDate(Wallet wallet, int month)
             Console.WriteLine($"    {t.Date:yyyy-MM-dd} | {t.Amount} | {t.Description}");
         }
     }
+
     Console.WriteLine();
 }
 
 // Вывод в консоль топ-3 трат за указанный месяц
-void PrintTopExpenses(Wallet wallet, int month)
+void PrintTopExpenses(Wallet wallet, int month, int year)
 {
     Console.WriteLine($"Топ-3 расходов для кошелька {wallet.Name}::{wallet.Id.ToString()[..4]}:");
 
     var topExpenses = wallet.Transactions
-        .Where(t => t.TransactionType == TransactionType.Expense && t.Date.Month == month)
+        .Where(t => t.TransactionType == TransactionType.Expense && t.Date.Month == month && t.Date.Year == year)
         .OrderByDescending(t => t.Amount)
         .Take(3);
 
@@ -175,5 +195,6 @@ void PrintTopExpenses(Wallet wallet, int month)
     {
         Console.WriteLine($"    {t.Date:d} | {t.Amount} | {t.Description}");
     }
+
     Console.WriteLine();
 }

@@ -1,8 +1,6 @@
-﻿using TestTaskMonopoly.Domain;
-using TestTaskMonopoly.Services;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using TestTaskMonopoly.Services;
 namespace Tests;
 
 public class WalletGeneratorTests
@@ -12,10 +10,7 @@ public class WalletGeneratorTests
     public WalletGeneratorTests()
     {
         var builder = Host.CreateDefaultBuilder()
-            .ConfigureServices(services =>
-            {
-                services.AddSingleton<IWalletGenerator, WalletGenerator>();
-            });
+            .ConfigureServices(services => { services.AddSingleton<IWalletGenerator, WalletGenerator>(); });
 
         using var host = builder.Build();
         _walletGenerator = host.Services.GetRequiredService<IWalletGenerator>();
